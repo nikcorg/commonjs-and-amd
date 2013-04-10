@@ -1,0 +1,10 @@
+{
+  "name": "shared-modules-testing",
+  "version": "0.0.0",
+  "dependencies": {
+    "almond": "~0.2.5",
+    "cajon": "requirejs/cajon",
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4"
+  }
+}

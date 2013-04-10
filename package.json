@@ -1,0 +1,9 @@
+{
+  "name": "shared-modules-testing",
+  "version": "0.0.0",
+  "dependencies": {
+    "grunt-requirejs": "0.3.1",
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4"
+  }
+}
