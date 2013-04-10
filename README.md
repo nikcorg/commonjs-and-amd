@@ -1,6 +1,6 @@
 # A miniscule study in sharing code between a CommonJS and AMD environment without UMD
 
-In my current project, I'm sharing a large portion of code between the server and the browser. Initially I used a customised [UMDJS](https://gist.github.com/nikcorg/4444301) signature for this purpose. But it proved problematic when building a monolith - <code>r.js</code> understood absolutely nothing and all my modules where nameless.
+In my current project, I'm sharing a large portion of code between the server and the browser. Initially I used a customised [UMDJS](https://gist.github.com/nikcorg/4444301) signature for this purpose. But it proved problematic when building a monolith; <code>r.js</code> understood absolutely nothing and all my modules where nameless.
 
 At first, I tried finding a solution to make <code>r.js</code> understand UMDJS, but quite quickly gave up and decided I need to look elsewhere for a better solution.
 
