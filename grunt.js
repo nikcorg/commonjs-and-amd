@@ -1,19 +1,17 @@
 module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-requirejs");
+    grunt.loadNpmTasks("grunt-contrib-copy");
 
     var defaults = {
-            amdloader: "components/cajon/cajon.js",
+            amdloader: "src/components/cajon/cajon.js",
             application: {
-                appDir: "app",
+                appDir: "src/app",
                 baseUrl: "../app",
                 cjsTranslate: true,
-                dir: "app-build/app",
+                dir: "build/app",
                 findNestedDependencies: true,
-                include: ["run"],
-                insertRequire: ["run"],
                 keepBuildDir: true,
-                //logLevel: 1,
-                mainConfigFile: "requirejs.config.js",
+                mainConfigFile: "src/requirejs.config.js",
                 optimize: "none",
                 useStrict: true,
                 modules: [
@@ -28,13 +26,12 @@ module.exports = function (grunt) {
                 }
             },
             components: {
-                baseUrl: "app",
-                mainConfigFile: "requirejs.config.js",
+                baseUrl: "src/app",
+                mainConfigFile: "src/requirejs.config.js",
                 cjsTranslate: false,
                 findNestedDependencies: true,
-                include: ["components"],
+                include: ["../requires.js"],
                 keepBuildDir: true,
-                //logLevel: 1,
                 out: "temp/components.js"
             }
         };
@@ -51,13 +48,20 @@ module.exports = function (grunt) {
             min: {
                 release: {
                     src: ["<config:defaults.amdloader>", "temp/components.js"],
-                    dest: "app-build/amdloader.js",
+                    dest: "build/amdloader.js",
                     logLevel: 1
+                }
+            },
+            copy: {
+                release: {
+                    files: {
+                        "build/": "src/*.html"
+                    }
                 }
             }
         };
 
     grunt.initConfig(config);
-    grunt.registerTask("build", "requirejs:release requirejs:components min");
+    grunt.registerTask("build", "requirejs:release requirejs:components min copy");
 };
 
