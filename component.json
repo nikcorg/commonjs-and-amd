@@ -5,6 +5,9 @@
     "almond": "~0.2.5",
     "cajon": "requirejs/cajon",
     "backbone": "~1.0.0",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "layoutmanager": "~0.8.7",
+    "jquery": "~1.9.1",
+    "q": "~0.9.3"
   }
 }
