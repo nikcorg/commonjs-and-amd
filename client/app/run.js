@@ -5,6 +5,7 @@ var Backbone = require("backbone");
 
 require("backbone.layoutmanager");
 
+console.log("Application running...");
 console.log("BB.LM", Backbone.Layout);
 
 dynamic.fubar().

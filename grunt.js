@@ -1,4 +1,4 @@
-/*global module:false*/
+/*global module:false, __dirname:false*/
 module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-requirejs");
     grunt.loadNpmTasks("grunt-contrib-copy");
@@ -20,17 +20,17 @@ module.exports = function (grunt) {
     });
 
     var loaders = {
-            almond: "src/components/almond/almond.js",
-            cajon: "src/components/cajon/cajon.js",
-            requirejs: "src/components/requirejs/require.js"
+            almond: "client/components/almond/almond.js",
+            cajon: "client/components/cajon/cajon.js",
+            requirejs: "client/components/requirejs/require.js"
         };
     var defaults = {
-            amdloader: "src/components/requirejs/require.js",
-            requireConfig: "src/requirejs.config.js",
+            requireConfig: "client/requirejs.config.js",
             dirs: {
-                build: "build",
-                debug: "debug",
-                temp: "temp"
+                src: __dirname + "/client",
+                build: __dirname + "/client-build",
+                debug: __dirname + "/client-debug",
+                temp: __dirname + "/temp"
             },
             build: {
                 amdloader: loaders.requirejs
@@ -39,11 +39,8 @@ module.exports = function (grunt) {
                 amdloader: loaders.cajon
             }
         };
-    var deps = Object.keys(require("./component.json").dependencies);
+    var deps = ["q", "underscore", "backbone", "backbone.layoutmanager", "jquery"];
     var emptyDeps = deps.
-        filter(function (key) {
-            return Object.keys(loaders).indexOf(key) === -1;
-        }).
         reduce(function (map, key) {
             map[key] = "empty:";
             return map;
@@ -54,14 +51,14 @@ module.exports = function (grunt) {
             requirejs: {
                 application: {
                     options: {
-                        appDir: "src/app",
+                        appDir: defaults.dirs.src + "/app",
                         baseUrl: "../app",
                         cjsTranslate: true,
                         dir: defaults.dirs.build + "/app",
                         findNestedDependencies: true,
                         keepBuildDir: true,
                         mainConfigFile: defaults.requireConfig,
-                        optimize: "none",
+                        optimize: "uglify",
                         useStrict: true,
                         modules: [
                             { name: "run" }
@@ -71,39 +68,36 @@ module.exports = function (grunt) {
                 },
                 components: {
                     options: {
-                        baseUrl: "src/app",
+                        baseUrl: defaults.dirs.src + "/app",
                         mainConfigFile: defaults.requireConfig,
                         cjsTranslate: false,
                         findNestedDependencies: true,
-                        include: ["../../temp/requires"],
+                        include: ["../../temp/requires"], //FIXME
                         keepBuildDir: true,
-                        logLevel: 1,
-                        out: "temp/components.js"
+                        out: defaults.dirs.temp + "/components.js"
                     }
                 }
             },
             min: {
                 build: {
-                    src: ["<%= defaults.build.amdloader %>", "temp/components.js"],
-                    dest: "<%= defaults.dirs.build %>/amdloader.js",
-                    logLevel: 1
+                    src: ["<%= defaults.build.amdloader %>", defaults.dirs.temp + "/components.js"],
+                    dest: "<%= defaults.dirs.build %>/amdloader.js"
                 },
                 debug: {
-                    src: ["<%= defaults.debug.amdloader %>", "temp/components.js"],
-                    dest: '<%= defaults.dirs.debug %>/amdloader.js',
-                    logLevel: 1
+                    src: ["<%= defaults.debug.amdloader %>", defaults.dirs.temp + "/components.js"],
+                    dest: '<%= defaults.dirs.debug %>/amdloader.js'
                 }
             },
             copy: {
                 build: {
                     files: {
-                        "<%= defaults.dirs.build %>/index.html": "src/*.html"
+                        "<%= defaults.dirs.build %>/index.html": defaults.dirs.src + "/*.html"
                     }
                 },
                 debug: {
                     files: {
-                        "<%= defaults.dirs.debug %>/index.html": "src/*.html",
-                        "<%= defaults.dirs.debug %>/app/": "src/app/**/*"
+                        "<%= defaults.dirs.debug %>/index.html": defaults.dirs.src + "/*.html",
+                        "<%= defaults.dirs.debug %>/app/": defaults.dirs.src + "/app/**/*"
                     }
                 }
             },
@@ -111,9 +105,18 @@ module.exports = function (grunt) {
                 all: ["temp", "build", "debug"]
             },
             requires: {
-                deps: ["q", "underscore", "backbone", "backbone.layoutmanager", "jquery"],
+                deps: deps,
                 output: defaults.dirs.temp + "/requires.js",
                 exclude: Object.keys(loaders)
+            },
+            watch: {
+                client: {
+                    files: [
+                        defaults.dirs.src + "/*.html",
+                        defaults.dirs.src + "/app/**/*"
+                    ],
+                    tasks: ["copy:debug"]
+                }
             }
         };
 
@@ -128,6 +131,6 @@ module.exports = function (grunt) {
     /* Build debug front end */
     grunt.registerTask(
         "debug",
-        "clean generate-requires:requires requirejs:components min:debug copy:debug"
+        "clean generate-requires:requires requirejs:components min:debug copy:debug watch"
         );
 };
