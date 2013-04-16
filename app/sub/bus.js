@@ -1,5 +1,6 @@
+/*global module:false*/
 module.exports = {
     drive: function () {
-               console.log("Vroom! Vroom!");
-           }
+        return "Vroom! Vroom!";
+    }
 };
