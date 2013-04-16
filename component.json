@@ -8,6 +8,7 @@
     "underscore": "~1.4.4",
     "layoutmanager": "~0.8.7",
     "jquery": "~1.9.1",
-    "q": "~0.9.3"
+    "q": "~0.9.3",
+    "requirejs": "~2.1.5"
   }
 }

@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-copy");
 
     var defaults = {
-            amdloader: "src/components/cajon/cajon.js",
+            amdloader: "src/components/requirejs/require.js",
             application: {
                 appDir: "src/app",
                 baseUrl: "../app",
