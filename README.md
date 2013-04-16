@@ -18,5 +18,4 @@ Fetch dependencies by commanding <code>bower install && npm install</code>
 
 Build monolith by commanding <code>grunt build</code>. (NB! Only tested with Grunt 0.3.)
 
-Visit <code>index.html</code> for the Cajon version, <code>single.html</code> for the built monolith.
-
+Visit <code>src/index.html</code> for the Cajon version, <code>build/single.html</code> for the built monolith.
