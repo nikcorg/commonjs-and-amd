@@ -64,4 +64,3 @@ module.exports = function (grunt) {
     grunt.initConfig(config);
     grunt.registerTask("build", "requirejs:release requirejs:components min copy");
 };
-
