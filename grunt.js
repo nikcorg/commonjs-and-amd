@@ -2,30 +2,62 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-requirejs");
 
     var defaults = {
-            requirejs: {
-                baseUrl: "app",
-                name: "../components/almond/almond",
-                mainConfigFile: "app/requirejs.config.js",
+            amdloader: "components/cajon/cajon.js",
+            application: {
+                appDir: "app",
+                baseUrl: "../app",
+                cjsTranslate: true,
+                dir: "app-build/app",
+                findNestedDependencies: true,
                 include: ["run"],
                 insertRequire: ["run"],
+                keepBuildDir: true,
+                //logLevel: 1,
+                mainConfigFile: "requirejs.config.js",
                 optimize: "none",
-                out: "app/single.js",
-                findNestedDependencies: true,
                 useStrict: true,
-                cjsTranslate: true,
-                logLevel: 1
+                modules: [
+                    { name: "run" }
+                ],
+                paths: {
+                    "backbone": "empty:",
+                    "backbone.layoutmanager": "empty:",
+                    "jquery": "empty:",
+                    "q": "empty:",
+                    "underscore": "empty:"
+                }
+            },
+            components: {
+                baseUrl: "app",
+                mainConfigFile: "requirejs.config.js",
+                cjsTranslate: false,
+                findNestedDependencies: true,
+                include: ["components"],
+                keepBuildDir: true,
+                //logLevel: 1,
+                out: "temp/components.js"
             }
         };
     var config = {
             defaults: defaults,
             requirejs: {
                 release: {
-                     options: '<config:defaults.requirejs>'
-                 }
+                    options: "<config:defaults.application>"
+                },
+                components: {
+                    options: "<config:defaults.components>"
+                }
+            },
+            min: {
+                release: {
+                    src: ["<config:defaults.amdloader>", "temp/components.js"],
+                    dest: "app-build/amdloader.js",
+                    logLevel: 1
+                }
             }
         };
 
     grunt.initConfig(config);
-    grunt.registerTask("build", "requirejs:release");
-}
+    grunt.registerTask("build", "requirejs:release requirejs:components min");
+};
 
