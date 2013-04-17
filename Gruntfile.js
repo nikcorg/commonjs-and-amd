@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                 components: {
                     options: {
                         cjsTranslate: false,
-                        include: ["bootstrap"], //FIXME
+                        include: ["bootstrap"],
                         out: "<%= defaults.dirs.temp %>/components.js",
                         paths: {
                             "bootstrap": "../bootstrap",
