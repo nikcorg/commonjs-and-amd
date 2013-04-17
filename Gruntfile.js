@@ -6,11 +6,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
 
+    /* Define loaders */
     var loaders = {
             almond: "client/components/almond/almond.js",
             cajon: "client/components/cajon/cajon.js",
             requirejs: "client/components/requirejs/require.js"
         };
+
+    /* Some defaults */
     var defaults = {
             requireConfig: "client/bootstrap.js",
             dirs: {
@@ -26,11 +29,18 @@ module.exports = function (grunt) {
                 amdloader: loaders.cajon
             }
         };
+
+    /* This is ugly, but it works. I know there's a bower-package I could use
+     * but as this is just a concept demo (for now), I'm happy with the quick
+     * and dirty solution.
+     * */
     var emptyDeps = Object.keys(require("./component.json").dependencies).
         reduce(function (map, key) {
             map[key] = "empty:";
             return map;
         }, {});
+
+    /* Compile actual Tasks config */
     var config = {
             defaults: defaults,
             loaders: loaders,
