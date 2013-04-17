@@ -5,21 +5,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.registerTask("generate-requires", "Generate requires.js", function(conf) {
-        console.log("genreq", conf);
-        var config = grunt.config(conf);
-        var deps = config.deps;
-        var output = config.output;
-        var xlist = config.exclude;
-
-        var buffer = 'require(["' + deps.
-            filter(function (lib) {
-                return xlist.indexOf(lib) === -1;
-            }).
-            join('","') + '"]);';
-
-        grunt.file.write(output, buffer);
-    });
 
     var loaders = {
             almond: "client/components/almond/almond.js",
@@ -151,7 +136,6 @@ module.exports = function (grunt) {
         [
             "clean",
             "requirejs:application",
-            //"generate-requires:components",
             "requirejs:components",
             "uglify:build",
             "copy:build"
@@ -163,7 +147,6 @@ module.exports = function (grunt) {
         "debug",
         [
             "clean",
-            //"generate-requires:components",
             "requirejs:components",
             "uglify:debug",
             "copy:debug",
