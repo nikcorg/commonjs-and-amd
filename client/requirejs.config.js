@@ -2,7 +2,7 @@
 var require = {
     paths: {
         "backbone": "../components/backbone/backbone",
-        "backbone.layoutmanager": "../components/layoutmanager/backbone.layoutmanager",
+        "layoutmanager": "../components/layoutmanager/backbone.layoutmanager",
         "jquery": "../components/jquery/jquery",
         "underscore": "../components/underscore/underscore",
         "q": "../components/q/q"

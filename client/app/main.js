@@ -1,23 +1,22 @@
+var main = require("main");
+var outer = require("outer");
+var dynamic = new outer.Model({foo:"bar"});
 var Backbone = require("backbone");
-var _ = require("underscore");
-var Utils = require("utils");
 
-function main() {
-    var Model = Backbone.Model.extend({});
-    var model = new Model({ hello: "world!" });
+require("layoutmanager");
 
-    console.log(Utils.reverse("fubar"));
-    console.dir(model);
-    console.dir(_.keys(model));
+console.log("Application running...");
+console.log("BB.LM", Backbone.Layout);
 
-    try {
-        Utils.throws();
-    } catch (e) {
-        console.error("Caught exception: " + e.message);
-    }
+dynamic.fubar().
+then(function (msg) {
+    console.log("msg=",msg);
+}, function (e) {
+    console.error("fubar=", e.message);
+}).done();
 
-    // Uncaught exception
-    Utils.throws();
+try {
+    console.log(outer.echo("echo echo"));
+} catch (e) {
+    console.error("Caught in runner: " + e.message);
 }
-
-module.exports = main;
