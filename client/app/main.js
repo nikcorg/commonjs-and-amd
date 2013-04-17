@@ -1,9 +1,6 @@
 var main = require("main");
 var outer = require("outer");
 var dynamic = new outer.Model({foo:"bar"});
-var Backbone = require("backbone");
-
-require("layoutmanager");
 
 console.log("Application running...");
 console.log("BB.LM", Backbone.Layout);
