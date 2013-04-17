@@ -26,8 +26,7 @@ module.exports = function (grunt) {
                 amdloader: loaders.cajon
             }
         };
-    var deps = ["q", "underscore", "backbone", "layoutmanager", "jquery"];
-    var emptyDeps = deps.
+    var emptyDeps = Object.keys(require("./component.json").dependencies).
         reduce(function (map, key) {
             map[key] = "empty:";
             return map;
@@ -97,11 +96,7 @@ module.exports = function (grunt) {
                             cwd: "<%= defaults.dirs.src %>",
                             dest: "<%= defaults.dirs.debug %>/",
                             expand: true,
-                            src: [
-                                "bootstrap.js",
-                                "*.html",
-                                "app/**"
-                            ]
+                            src: ["*.html", "app/**"]
                         }
                     ]
                 }
@@ -111,12 +106,6 @@ module.exports = function (grunt) {
                 all: ["temp", "client-build", "client-debug"]
             },
 
-            components: {
-                deps: deps,
-                output: "<%= defaults.dirs.temp %>/requires.js",
-                exclude: Object.keys(loaders)
-            },
-
             watch: {
                 client: {
                     files: [
@@ -124,6 +113,12 @@ module.exports = function (grunt) {
                         "<%= defaults.dirs.src %>/app/**/*"
                     ],
                     tasks: ["copy:debug"]
+                },
+                components: {
+                    files: [
+                        "<%= defaults.dirs.src %>/bootstrap.js"
+                    ],
+                    tasks: ["requirejs:components", "uglify:debug"]
                 }
             }
         };
