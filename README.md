@@ -23,5 +23,6 @@ That solution was doing everything as CommonJS.
 Fetch dependencies by commanding <code>bower install && npm install</code>
 
 Build by commanding <code>grunt debug</code> (dev version) or <code>grunt build</code> (release version). (NB! Requires Grunt 0.4)
-
 Visit <code>client-debug/index.html</code> for the dev version (uses Cajon), or <code>client-build/single.html</code> for the release version (uses RequireJS) in your browser.
+
+PS. The demo app doesn't do anything. (Except some <code>console.log</code>ging.) It's sole purpose was just to test whether this idea works or not. A better app might happen some day.
