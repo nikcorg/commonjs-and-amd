@@ -16,6 +16,7 @@ That solution was doing everything as CommonJS.
 ## Application startup
 
 * Application startup is always done by loading the components monolith, which using <code>bootstrap.js</code> loads the application startup script
+* As a benefit the <code>script</code>-tag for "booting up" remains unchanged between dev and release
 
 ## Demo
 
