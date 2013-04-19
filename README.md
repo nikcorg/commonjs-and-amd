@@ -22,6 +22,6 @@ That solution was doing everything as CommonJS.
 
 Fetch dependencies by commanding <code>bower install && npm install</code>
 
-Build monolith by commanding <code>grunt debug</code> (dev version) or <code>grunt build</code> (release version). (NB! Requires Grunt 0.4)
+Build by commanding <code>grunt debug</code> (dev version) or <code>grunt build</code> (release version). (NB! Requires Grunt 0.4)
 
 Visit <code>client-debug/index.html</code> for the dev version (uses Cajon), or <code>client-build/single.html</code> for the release version (uses RequireJS) in your browser.
