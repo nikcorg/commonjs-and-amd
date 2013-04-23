@@ -9,6 +9,7 @@
     "jquery": "~1.9.1",
     "q": "~0.9.3",
     "requirejs": "~2.1.5",
-    "requirejs-domready": "~2.0.1"
+    "requirejs-domready": "~2.0.1",
+    "handlebars": "~1.0.0-rc.3"
   }
 }
