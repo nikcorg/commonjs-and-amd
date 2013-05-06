@@ -15,25 +15,29 @@ module.exports = function (grunt) {
 
     /* Some defaults */
     var defaults = {
-            requireConfig: "client/bootstrap.js",
+            build: {
+                amdloader: loaders.requirejs
+            },
+            debug: {
+                amdloader: loaders.cajon
+            },
             dirs: {
                 src: "client",
                 build: "client-build",
                 debug: "client-debug",
                 temp: "temp"
             },
-            build: {
-                amdloader: loaders.requirejs
-            },
-            debug: {
-                amdloader: loaders.cajon
-            }
+            requireConfig: "client/bootstrap.js"
         };
 
     /* This is ugly, but it works. I know there's a bower-package I could use
      * but as this is just a concept demo (for now), I'm happy with the quick
      * and dirty solution.
-     * */
+     *
+     * For all packages listed in component.json, create a "library":"empty:"
+     * entry in the map we use for building the application monolith, because
+     * the libs are built separately.
+     */
     var emptyDeps = Object.keys(require("./component.json").dependencies).
         reduce(function (map, key) {
             map[key] = "empty:";
