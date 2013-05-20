@@ -9,12 +9,7 @@ module.exports = Backbone.Layout.extend({
             throw new Error("itemView must be configured");
         }
 
-        var View = this.options.itemView;
-        this.insertViews(
-            this.collection.map(function (model) {
-                return new View({ model: model });
-            })
-        );
+        this.collection.map(this.appendItemView, this);
         this.collection.on("add", this.appendItemView, this);
         this.collection.on("remove", this.removeItemView, this);
     },
