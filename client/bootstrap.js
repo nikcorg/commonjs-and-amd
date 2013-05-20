@@ -39,6 +39,8 @@ define(
         "underscore"
     ],
     function (domReady) {
+        "use strict";
+
         domReady(function () {
             require(["main"]);
         });

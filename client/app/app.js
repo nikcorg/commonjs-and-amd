@@ -1,4 +1,5 @@
 var Q = require("q");
+var $ = require("jquery");
 var Backbone = require("backbone");
 var Handlebars = require("handlebars");
 var JST = {};
@@ -11,21 +12,20 @@ Backbone.Layout.configure({
 
         path = "app/templates/" + path + ".html";
 
-        // If the template has not been loaded yet, then load.
-        if (!JST[path]) {
+        // If the template has not been loaded yet
+        if (! JST[path]) {
             done = this.async();
+
             return Q($.ajax({ url: path })).
-                then(function (contents) {
-                    JST[path] = Handlebars.compile(contents);
-                    JST[path].__compiled__ = true;
+            then(function (contents) {
+                JST[path] = Handlebars.compile(contents);
+                JST[path].__compiled__ = true;
+                done(JST[path]);
+            });
+        } else
 
-                    done(JST[path]);
-                }).
-                done();
-        }
-
-        // If the template hasn't been compiled yet, then compile.
-        if (!JST[path].__compiled__) {
+        // If the template is present but not yet compiled
+        if (! JST[path].__compiled__) {
             JST[path] = Handlebars.template(JST[path]);
             JST[path].__compiled__ = true;
         }

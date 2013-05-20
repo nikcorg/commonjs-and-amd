@@ -8,7 +8,9 @@ module.exports = Backbone.Model.extend({
     },
     url: function () {
         var url = "/tasks";
-        if (this.id) url += "/" + this.id;
+        if (this.id) {
+            url += "/" + this.id;
+        }
         return url;
     }
 });

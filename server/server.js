@@ -14,11 +14,19 @@ Tasks.prototype.file = __dirname + "/data/tasks.json";
 
 var tasks = new Tasks();
 
+var staticOptions = {
+    debug: {},
+    build: { maxAge: 600 * 1000 }
+};
+
 app.configure(function() {
-    app.set("port", process.env.PORT || 8080);
+    app.set("port", process.env.PORT || 3000);
     app.use(express.logger("dev"));
+
+    app.use(express.compress());
+    app.use(express.static(process.env.STATIC, staticOptions[process.env.ENV] || {}));
 });
-app.use(express.static(process.env.STATIC));
+
 
 app.get("/tasks/:id", function (req, res) {
     tasks.fetch().

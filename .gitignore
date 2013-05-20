@@ -3,3 +3,5 @@ client-debug
 client/components
 node_modules
 temp
+*.sublime-project
+*.sublime-workspace
