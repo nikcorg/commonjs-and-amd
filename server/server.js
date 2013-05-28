@@ -24,7 +24,7 @@ app.configure(function() {
     app.use(express.logger("dev"));
 
     app.use(express.compress());
-    app.use(express.static(process.env.STATIC, staticOptions[process.env.ENV] || {}));
+    app.use(express.static(process.env.NODE_EXPRESS_STATIC, staticOptions[process.env.NODE_ENV] || {}));
 });
 
 

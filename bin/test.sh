@@ -11,4 +11,4 @@ fi
 
 source $ENV_SETUP
 
-grunt simplemocha
+grunt test
