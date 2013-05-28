@@ -14,7 +14,7 @@
   "scripts": {
       "build": "./bin/build.sh",
       "debug": "./bin/debug.sh",
-      "install": "bower install; cd server && npm install; cd ..",
+      "install": "bower install && cd server && npm install && cd .. && cd .git/hooks && ln -s ../../bin/pre-commit pre-commit && cd ../..",
       "start": "./bin/server.sh",
       "test": "./bin/test.sh"
   }
