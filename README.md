@@ -1,4 +1,4 @@
-# A miniscule study in sharing code between a CommonJS and AMD environment without UMD
+# A miniscule study in sharing code between CommonJS and AMD environments
 
 In my current project, I'm sharing a large portion of code between the server and the browser. Initially I used a customised [UMDJS](https://gist.github.com/nikcorg/4444301) signature for this purpose. But it proved problematic when building a monolith; <code>r.js</code> understood absolutely nothing and all my modules were nameless.
 
@@ -20,8 +20,10 @@ That solution was doing everything as CommonJS.
 
 ## Demo
 
+NB! Requires Grunt 0.4.
+
 Fetch dependencies by commanding <code>npm install</code>. Run tests by commanding <code>npm test</code>.
 
-Build by commanding <code>npm run-script debug</code> (dev version) or <code>grunt run-script build</code> (release version). (NB! Requires Grunt 0.4)
+Build by commanding <code>npm run-script debug</code> (dev version) or <code>grunt run-script build</code> (release version).
 
 Run the server by commanding <code>npm start</code>, then visit <code>http://localhost:3000</code> (default port) in your browser.
