@@ -1,11 +1,12 @@
 /*global module:false, __dirname:false*/
 module.exports = function (grunt) {
-    grunt.loadNpmTasks("grunt-requirejs");
-    grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-clean");
+    grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-simple-mocha");
+    grunt.loadNpmTasks("grunt-requirejs");
 
     /* Define loaders */
     var loaders = {
@@ -27,7 +28,8 @@ module.exports = function (grunt) {
                 build: "client-build",
                 debug: "client-debug",
                 server: "server",
-                temp: "temp"
+                temp: "temp",
+                tests: "tests"
             },
             requireConfig: "client/bootstrap.js"
         };
@@ -50,7 +52,18 @@ module.exports = function (grunt) {
     var config = {
             defaults: defaults,
             loaders: loaders,
-
+            simplemocha: {
+                options: {
+                    globals: [],
+                    timeout: 3000,
+                    ignoreLeaks: false,
+                    ui: "bdd",
+                    reporter: "dot"
+                },
+                all: {
+                    src: ['tests/**/*.js']
+                }
+            },
             requirejs: {
                 options: {
                     baseUrl: "<%= defaults.dirs.src %>/app",
@@ -236,6 +249,15 @@ module.exports = function (grunt) {
             "requirejs:components",
             "uglify:build",
             "copy:build"
+        ]
+    );
+
+    grunt.registerTask(
+        "test",
+        [
+            "jshint:client",
+            "jshint:server",
+            "simplemocha:all"
         ]
     );
 
