@@ -20,9 +20,8 @@ That solution was doing everything as CommonJS.
 
 ## Demo
 
-Fetch dependencies by commanding <code>bower install && npm install</code>
+Fetch dependencies by commanding <code>npm install</code>. Run tests by commanding <code>npm test</code>.
 
-Build by commanding <code>grunt debug</code> (dev version) or <code>grunt build</code> (release version). (NB! Requires Grunt 0.4)
-Visit <code>client-debug/index.html</code> for the dev version (uses Cajon), or <code>client-build/single.html</code> for the release version (uses RequireJS) in your browser.
+Build by commanding <code>npm run-script debug</code> (dev version) or <code>grunt run-script build</code> (release version). (NB! Requires Grunt 0.4)
 
-PS. The demo app doesn't do anything. (Except some <code>console.log</code>ging.) It's sole purpose was just to test whether this idea works or not. A better app might happen some day.
+Run the server by commanding <code>npm start</code>, then visit <code>http://localhost:3000</code> (default port) in your browser.
