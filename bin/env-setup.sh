@@ -1,9 +1,16 @@
 PWD=$(pwd)
-NODE_ENV=$1
 
-[ "x$NODE_ENV" = "x" ] && NODE_ENV="debug"
+# NODE_ENV is detected based on which folders exist
+# Arguable brittle, but it's simple
+
+NODE_ENV="debug"
+NODE_EXPRESS_STATIC="client-$NODE_ENV"
+
+if [ ! -d $NODE_EXPRESS_STATIC ]; then
+    NODE_ENV="build"
+    NODE_EXPRESS_STATIC="client-$NODE_ENV"
+fi
 
 NODE_PATH=$PWD/server:$PWD/server/node_modules:$PWD/client/app
-NODE_EXPRESS_STATIC="client-$NODE_ENV"
 
 export NODE_ENV NODE_PATH NODE_EXPRESS_STATIC

@@ -11,4 +11,9 @@ fi
 
 source $ENV_SETUP
 
+if [ ! -d $NODE_EXPRESS_STATIC ]; then
+    echo "Static folder not found, did you remember to build?"
+    exit 1
+fi
+
 node server/server
