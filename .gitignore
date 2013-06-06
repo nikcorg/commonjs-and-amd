@@ -1,3 +1,4 @@
+.DS_Store
 client-build
 client-debug
 client/components
