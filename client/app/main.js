@@ -16,7 +16,6 @@ app.filters = {
         return model.get("completed");
     },
     pending: function (model) {
-        console.log("filter", ! model.get("completed"));
         return ! model.get("completed");
     }
 };
