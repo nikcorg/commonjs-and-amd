@@ -6,10 +6,14 @@ module.exports = Backbone.Layout.extend({
     className: "",
     events: {
         "click .done": "toggleCompleted",
-        "click .delete": "destroy"
+        "click .delete": "destroy",
+        "dblclick": "edit"
     },
     initialize: function () {
         this.model.on("change", this.render, this);
+    },
+    edit: function (e) {
+        this.trigger("task:edit", this.model);
     },
     beforeRender: function () {
         if (this.model.get("completed")) {

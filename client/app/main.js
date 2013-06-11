@@ -10,12 +10,16 @@ app.views.filters.on("filter:change", function (filter) {
     }
 });
 
+app.views.tasks.on("task:edit", function (task) {
+    app.views.form.edit(task);
+});
+
 app.container = new Backbone.Layout({
     el: document.body,
     template: "layout",
     views: {
         "#tasks": app.views.tasks,
-        "#taskform": app.views.form,
+        "#addedit": app.views.form,
         "#filters": app.views.filters
     }
 });

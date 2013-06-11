@@ -3,6 +3,62 @@ body {
     font-size: 62.5%;
 }
 
+.container {
+    margin: 0 auto;
+    width: 500px;
+    overflow: hidden;
+}
+
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+#tasks ul {
+    margin: 0;
+    padding: 0;
+    min-height: 300px;
+}
+
+#tasks li {
+    margin: 8px 0;
+    padding: 0;
+    width: 100%;
+}
+
+#tasks .title {
+    font-weight: normal;
+    font-size: 2em;
+    padding-left: 10px;
+}
+
+#tasks .tools {
+    display: block;
+    float: right;
+}
+
 #tasks .completed {
     text-decoration: line-through;
+}
+
+#filters span {
+    float: left;
+    width: 33%;
+}
+
+#addedit input, #addedit button {
+    display: block;
+    width: 100%;
+}
+
+#addedit input {
+    background-color: #eee;
+    font-size: 2em;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#addedit input:focus {
+    outline: 0;
 }
