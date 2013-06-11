@@ -1,9 +1,7 @@
 var assert = require("assert");
-var Task = require("../../../client/app/models/task");
+var Task = require("models/task");
 
 describe("TaskModel", function () {
-    console.log("describe");
-
     it("has the id as the url suffix", function () {
         var task = new Task({"id":"1", "title":"Lorem ipsum"});
         assert.equal("/tasks/1", task.url());
@@ -11,7 +9,6 @@ describe("TaskModel", function () {
 
     it("has no id when unsaved", function () {
         var task = new Task();
-        assert.equal("/tasks", task.url());
-        // throw new Error("I shall fail");
+        assert.equal(undefined, task.id);
     });
 });
