@@ -11,15 +11,6 @@ var TaskView = require("views/task");
 var TaskForm = require("views/taskform");
 var Filters = require("views/filters");
 
-app.filters = {
-    completed: function (model) {
-        return model.get("completed");
-    },
-    pending: function (model) {
-        return ! model.get("completed");
-    }
-};
-
 app.tasks = new Tasks();
 app.tasksView = new ListView({ itemView: TaskView, collection: app.tasks });
 app.tasksForm = new TaskForm({ collection: app.tasks });

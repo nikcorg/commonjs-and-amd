@@ -35,5 +35,13 @@ Backbone.Layout.configure({
 });
 
 module.exports = {
-    JST: JST
+    JST: JST,
+    filters: {
+        completed: function (model) {
+            return model.get("completed");
+        },
+        pending: function (model) {
+            return ! model.get("completed");
+        }
+    }
 };
