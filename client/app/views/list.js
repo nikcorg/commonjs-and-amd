@@ -15,7 +15,7 @@ module.exports = Backbone.Layout.extend({
     },
     appendItemView: function (model) {
         var View = this.options.itemView;
-        this.insertView(new View({ model: model }));
+        this.insertView(new View({ model: model })).render();
     },
     removeItemView: function (model) {
         this.removeView(function (view) {

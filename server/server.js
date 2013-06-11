@@ -86,7 +86,11 @@ app.post("/tasks", function (req, res) {
     Q.when([tasks.fetch(), data]).
     timeout(500).
     spread(function (tasks, data) {
-        return tasks.add(data);
+        if (! data.id) {
+            data.id = Math.max.apply(Math, tasks.pluck("id")) + 1 || 1;
+        }
+
+        return tasks.add(data).get(data.id);
     }).
     then(function (tasks) {
         res.send(201, tasks.toJSON());

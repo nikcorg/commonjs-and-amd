@@ -8,13 +8,17 @@ var Task = require("models/task");
 
 var ListView = require("views/list");
 var TaskView = require("views/task");
+var TaskForm = require("views/taskform");
 
 app.tasks = new Tasks();
 app.tasksView = new ListView({ itemView: TaskView, collection: app.tasks });
+app.tasksForm = new TaskForm({ collection: app.tasks });
 app.container = new Backbone.Layout({
     el: document.body,
+    template: "layout",
     views: {
-        "": [app.tasksView]
+        "#tasks": [app.tasksView],
+        "#taskform": [app.tasksForm]
     }
 });
 
