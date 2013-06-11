@@ -27,3 +27,7 @@ Fetch dependencies by commanding <code>npm install</code>. Run tests by commandi
 Build by commanding <code>npm run-script debug</code> (dev version) or <code>grunt run-script build</code> (release version).
 
 Run the server by commanding <code>npm start</code>, then visit <code>http://localhost:3000</code> (default port) in your browser.
+
+## Demo app
+
+The codebase contains a simple Todo MVC style app as an example
