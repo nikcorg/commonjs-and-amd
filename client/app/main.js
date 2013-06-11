@@ -10,8 +10,6 @@ app.views.filters.on("filter:change", function (filter) {
     }
 });
 
-console.log(app);
-
 app.container = new Backbone.Layout({
     el: document.body,
     template: "layout",
