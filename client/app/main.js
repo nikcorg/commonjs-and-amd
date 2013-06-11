@@ -1,40 +1,28 @@
 /*global document:false*/
 var Backbone = require("backbone");
-
 var app = require("app");
 
-var Tasks = require("collections/tasks");
-var Task = require("models/task");
-
-var ListView = require("views/list");
-var TaskView = require("views/task");
-var TaskForm = require("views/taskform");
-var Filters = require("views/filters");
-
-app.tasks = new Tasks();
-app.tasksView = new ListView({ itemView: TaskView, collection: app.tasks });
-app.tasksForm = new TaskForm({ collection: app.tasks });
-app.tasksFilter = new Filters();
-
-app.tasksFilter.on("filter:change", function (filter) {
+app.views.filters.on("filter:change", function (filter) {
     if (filter in app.filters) {
-        app.tasksView.setFilter(app.filters[filter]);
+        app.views.tasks.setFilter(app.filters[filter]);
     } else {
-        app.tasksView.clearFilter();
+        app.views.tasks.clearFilter();
     }
 });
+
+console.log(app);
 
 app.container = new Backbone.Layout({
     el: document.body,
     template: "layout",
     views: {
-        "#tasks": app.tasksView,
-        "#taskform": app.tasksForm,
-        "#filters": app.tasksFilter
+        "#tasks": app.views.tasks,
+        "#taskform": app.views.form,
+        "#filters": app.views.filters
     }
 });
 
-app.tasks.fetch().
+app.collections.tasks.fetch().
 then(function () {
     app.container.render();
 }, function (e) {

@@ -1,41 +1,28 @@
-var Q = require("q");
-var $ = require("jquery");
+var Config = require("configure");
 var Backbone = require("backbone");
-var Handlebars = require("handlebars");
-var JST = {};
 
-Backbone.Layout.configure({
-    manage: true,
-    fetch: function (path) {
-        // Initialize done for use in async-mode
-        var done;
+var ListView = require("views/list");
+var Filters = require("views/filters");
 
-        path = "app/templates/" + path + ".html";
+var Task = require("models/task");
+var Tasks = require("collections/tasks");
+var TaskView = require("views/task");
+var TaskForm = require("views/addedit");
 
-        // If the template has not been loaded yet
-        if (! JST[path]) {
-            done = this.async();
+var tasks = new Tasks();
+var tasksView = new ListView({ itemView: TaskView, collection: tasks });
+var tasksForm = new TaskForm({ collection: tasks });
+var tasksFilter = new Filters();
 
-            return Q($.ajax({ url: path })).
-            then(function (contents) {
-                JST[path] = Handlebars.compile(contents);
-                JST[path].__compiled__ = true;
-                done(JST[path]);
-            });
-        } else
-
-        // If the template is present but not yet compiled
-        if (! JST[path].__compiled__) {
-            JST[path] = Handlebars.template(JST[path]);
-            JST[path].__compiled__ = true;
-        }
-
-        return JST[path];
-    }
-});
-
-module.exports = {
-    JST: JST,
+var app = module.exports = {
+    collections: {
+        tasks: tasks
+    },
+    views: {
+        tasks: tasksView,
+        form: tasksForm,
+        filters: tasksFilter
+    },
     filters: {
         completed: function (model) {
             return model.get("completed");

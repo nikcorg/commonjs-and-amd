@@ -2,7 +2,7 @@ var Backbone = require("backbone");
 
 var TaskForm = module.exports = Backbone.View.extend({
     tagName: "form",
-    template: "taskform",
+    template: "addedit",
     events: {
         "submit": "addTask"
     },
