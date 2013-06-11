@@ -5,7 +5,8 @@ module.exports = Backbone.Layout.extend({
     template: "task",
     className: "",
     events: {
-        "click .done": "toggleCompleted"
+        "click .done": "toggleCompleted",
+        "click .delete": "destroy"
     },
     initialize: function () {
         this.model.on("change", this.render, this);
@@ -16,6 +17,9 @@ module.exports = Backbone.Layout.extend({
         } else {
             this.$el.removeClass("completed");
         }
+    },
+    destroy: function () {
+        this.model.destroy();
     },
     serialize: function () {
         return this.model.toJSON();
