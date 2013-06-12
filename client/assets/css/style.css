@@ -32,13 +32,13 @@ h1 {
     padding-left: 10px;
 }
 
+#tasks .completed .title {
+    text-decoration: line-through;
+}
+
 #tasks .tools {
     display: block;
     float: right;
-}
-
-#tasks .completed {
-    text-decoration: line-through;
 }
 
 #filters label {
