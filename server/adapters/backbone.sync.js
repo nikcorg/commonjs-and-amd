@@ -7,13 +7,30 @@ function setup(Backbone) {
         var deferred = Q.defer();
         var file;
         var data;
+        var collection;
 
-        if (this.file || this.collection && this.collection.file) {
-            file = this.file || this.collection && this.collection.file;
+        if (options.collection) {
+            collection = options.collection;
+        } else if (model instanceof Backbone.Collection) {
+            collection = model;
+        } else if (model instanceof Backbone.Model) {
+            collection = model.collection;
+        }
+
+        if (collection && collection.file) {
+            file = collection.file;
 
             switch (method) {
             case "create":
-                deferred.reject(new Error("Not implemented (sync)"));
+                data = model.toJSON();
+
+                if (model.isNew()) {
+                    data[model.idAttribute] = collection.maxId() + 1;
+                }
+
+                // TODO: Write new items to disk
+                options.success(data, options);
+                deferred.resolve(model);
                 break;
 
             case "read":
@@ -30,11 +47,11 @@ function setup(Backbone) {
                 break;
 
             case "update":
-                deferred.reject(new Error("Not implemented (sync)"));
+                deferred.reject(new Error("Not implemented (sync/update)"));
                 break;
 
             case "delete":
-                deferred.reject(new Error("Not implemented (sync)"));
+                deferred.reject(new Error("Not implemented (sync/delete)"));
                 break;
             }
         } else {
