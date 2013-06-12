@@ -1,6 +1,6 @@
 /*global __dirname:false, process:false*/
 var Q = require("q");
-var Backbone = require("backbone");
+var Backbone = require("./node_modules/backbone/index");
 
 require("./adapters/backbone.sync").setup(Backbone);
 require("./adapters/backbone.fetch").setup(Backbone);
@@ -9,8 +9,9 @@ var util = require("./lib/util");
 var express = require("express");
 var app = express();
 
-var Tasks = require("collections/tasks");
-Tasks.prototype.file = __dirname + "/data/tasks.json";
+var Tasks = require("collections/tasks").extend({
+    file: __dirname + "/data/tasks.json"
+});
 
 var tasks = new Tasks();
 
@@ -86,14 +87,16 @@ app.post("/tasks", function (req, res) {
     Q.when([tasks.fetch(), data]).
     timeout(500).
     spread(function (tasks, data) {
-        if (! data.id) {
-            data.id = Math.max.apply(Math, tasks.pluck("id")) + 1 || 1;
-        }
+        var task = new tasks.model(data);
 
-        return tasks.add(data).get(data.id);
+        return Q(task.save(null, { collection: tasks })).
+        then(function (task) {
+            return tasks.add(task);
+        }).
+        thenResolve(task);
     }).
-    then(function (tasks) {
-        res.send(201, tasks.toJSON());
+    then(function (task) {
+        res.send(201, task.toJSON());
     }, function (e) {
         res.send(500, e.message);
     }).
