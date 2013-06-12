@@ -25,16 +25,13 @@ module.exports = Backbone.Layout.extend({
         if (typeof(fn) === "function") {
             this.filterBy = fn;
         }
-
         this.reset();
     },
     clearFilter: function () {
         this.filterBy = this.defaultFilter;
-
         this.reset();
     },
     reset: function () {
-        console.log("resetting");
         this.removeView();
         this.collection.filter(this.filterBy || this.defaultFilter).map(this.appendItemView, this);
     },
