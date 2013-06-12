@@ -32,3 +32,11 @@ Backbone.Layout.configure({
         return JST[path];
     }
 });
+
+Backbone.ajax = function (options) {
+    if (options.contentType && options.contentType === "application/json") {
+        options.contentType += "; charset=utf-8";
+    }
+
+    return Q(Backbone.$.ajax(options));
+};
