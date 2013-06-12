@@ -23,7 +23,7 @@ module.exports = Backbone.Layout.extend({
         }
     },
     destroy: function () {
-        this.model.destroy();
+        this.model.destroy({ wait: true });
     },
     serialize: function () {
         return this.model.toJSON();
