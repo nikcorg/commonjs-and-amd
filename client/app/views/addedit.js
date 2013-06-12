@@ -9,15 +9,18 @@ var TaskForm = module.exports = Backbone.View.extend({
     },
     titleInput: null,
     onsubmit: function (e) {
+        var reset = _.bind(this.reset, this);
+
         e.preventDefault();
 
         if (! this.model) {
-            this.collection.create({ title: this.$titleInput.val() });
+            this.collection.create({ title: this.$titleInput.val() }, { wait: true, success: reset });
         } else {
-            this.model.set({ title: this.$titleInput.val() }).save();
-            this.model = null;
+            this.model.set({ title: this.$titleInput.val() }).save().then(reset);
         }
-
+    },
+    reset: function () {
+        this.model = null;
         this.render();
     },
     edit: function (task) {
