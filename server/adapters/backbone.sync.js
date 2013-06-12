@@ -1,6 +1,15 @@
 var Q = require("q");
 var FS = require("fs");
 var FS_readFile = Q.nfbind(FS.readFile);
+var FS_writeFile = Q.nfbind(FS.writeFile);
+
+function store(file, json) {
+    return FS_writeFile(file, JSON.stringify(json));
+}
+
+function read(file) {
+    return FS_readFile(file, "utf-8");
+}
 
 function setup(Backbone) {
     Backbone.sync = function (method, model, options) {
@@ -22,19 +31,20 @@ function setup(Backbone) {
 
             switch (method) {
             case "create":
-                data = model.toJSON();
+                model.set(model.idAttribute, collection.maxId() + 1);
+                options.success(null, options);
+                collection.add(model);
 
-                if (model.isNew()) {
-                    data[model.idAttribute] = collection.maxId() + 1;
-                }
-
-                // TODO: Write new items to disk
-                options.success(data, options);
-                deferred.resolve(model);
+                store(file, collection.toJSON()).
+                then(function () {
+                    deferred.resolve(model);
+                }, function (err) {
+                    deferred.reject(err);
+                });
                 break;
 
             case "read":
-                FS_readFile(file, "utf-8").
+                read(file).
                 then(function (data) {
                     return JSON.parse(data);
                 }).
@@ -47,11 +57,25 @@ function setup(Backbone) {
                 break;
 
             case "update":
-                deferred.reject(new Error("Not implemented (sync/update)"));
+                store(file, collection.toJSON()).
+                then(function () {
+                    deferred.resolve(model);
+                }, function (err) {
+                    deferred.reject(err);
+                });
                 break;
 
             case "delete":
-                deferred.reject(new Error("Not implemented (sync/delete)"));
+                Q(collection.remove(model)).
+                then(function (collection) {
+                    return store(file, collection.toJSON());
+                }).
+                then(function () {
+                    options.success();
+                    deferred.resolve();
+                }, function (err) {
+                    deferred.reject(err);
+                });
                 break;
             }
         } else {

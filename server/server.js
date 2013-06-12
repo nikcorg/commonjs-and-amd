@@ -36,6 +36,8 @@ app.get("/tasks/:id", function (req, res) {
         res.send(tasks.get(req.params("id")).toJSON());
     }, function (e) {
         res.send(500, e.message);
+        console.error(e.message);
+        console.log(e.stack);
     }).
     done();
 });
@@ -56,11 +58,13 @@ app.put("/tasks/:id", function (req, res) {
     Q.when([data, task]).
     timeout(500).
     spread(function (data, task) {
-        return task.set(data);//.save();
+        return task.set(data).save();
     }).then(function (task) {
         res.send(200, task.toJSON());
     }, function (e) {
         res.send(500, e.message);
+        console.error(e.message);
+        console.log(e.stack);
     }).
     done();
 });
@@ -72,6 +76,8 @@ app.get("/tasks", function (req, res) {
         res.send(tasks.toJSON());
     }, function (e) {
         res.send(500, e.message);
+        console.error(e.message);
+        console.log(e.stack);
     }).
     done();
 });
@@ -87,18 +93,14 @@ app.post("/tasks", function (req, res) {
     Q.when([tasks.fetch(), data]).
     timeout(500).
     spread(function (tasks, data) {
-        var task = new tasks.model(data);
-
-        return Q(task.save(null, { collection: tasks })).
-        then(function (task) {
-            return tasks.add(task);
-        }).
-        thenResolve(task);
+        return new tasks.model(data).save(null, { collection: tasks });
     }).
     then(function (task) {
         res.send(201, task.toJSON());
     }, function (e) {
         res.send(500, e.message);
+        console.error(e.message);
+        console.log(e.stack);
     }).
     done();
 });
@@ -106,15 +108,14 @@ app.post("/tasks", function (req, res) {
 app.delete("/tasks/:id", function (req, res) {
     tasks.fetch().
     then(function (tasks) {
-        return tasks.get(req.param("id"));
-    }).
-    then(function (task) {
-        return tasks.remove(task);
+        return tasks.get(req.param("id")).destroy();
     }).
     then(function () {
-        res.send(200, tasks.toJSON());
+        res.send(200, {}); // There needs to be a JSON payload
     }, function (e) {
         res.send(500, e.message);
+        console.error(e.message);
+        console.log(e.stack);
     });
 });
 
