@@ -29,7 +29,12 @@ h1 {
 #tasks .title {
     font-weight: normal;
     font-size: 2em;
-    padding-left: 10px;
+    margin-left: 10px;
+}
+
+#tasks .title[contenteditable=true] {
+    border: 1px solid #eee;
+    background-color: #BDF;
 }
 
 #tasks .completed .title {

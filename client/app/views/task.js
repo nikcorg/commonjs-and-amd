@@ -7,13 +7,26 @@ module.exports = Backbone.Layout.extend({
     events: {
         "click .done": "toggleCompleted",
         "click .delete": "destroy",
-        "dblclick": "edit"
+        "dblclick .title": "edit",
+        "keydown .title": "saveOnEnter"
     },
     initialize: function () {
         this.model.on("change", this.render, this);
     },
     edit: function (e) {
-        this.trigger("task:edit", this.model);
+        // this.trigger("task:edit", this.model);
+        this.$el.find(".title").attr("contenteditable", "true");
+    },
+    saveOnEnter: function (e) {
+        switch (e.keyCode) {
+        case 13: // Enter
+            this.model.set("title", this.$el.find(".title").removeAttr("contenteditable").html()).save();
+            break;
+
+        case 27: // Escape
+            this.$el.find(".title").html(this.model.get("title")).removeAttr("contenteditable");
+            break;
+        }
     },
     beforeRender: function () {
         if (this.model.get("completed")) {
