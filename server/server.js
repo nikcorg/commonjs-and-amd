@@ -93,6 +93,8 @@ app.post("/tasks", function (req, res) {
     Q.when([tasks.fetch(), data]).
     timeout(500).
     spread(function (tasks, data) {
+        // Because collection.create is flawed, I opted for a custom,
+        // albeit uglier, solution which doesn't modify Backbone
         return new tasks.model(data).save(null, { collection: tasks });
     }).
     then(function (task) {
