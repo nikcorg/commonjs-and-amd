@@ -20,7 +20,7 @@ module.exports = Backbone.Layout.extend({
     saveOnEnter: function (e) {
         switch (e.keyCode) {
         case 13: // Enter
-            this.model.set("title", this.$el.find(".title").removeAttr("contenteditable").html()).save();
+            this.model.set("title", this.$el.find(".title").removeAttr("contenteditable").text()).save();
             break;
 
         case 27: // Escape
