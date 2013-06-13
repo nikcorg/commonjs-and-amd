@@ -11,7 +11,7 @@ var TaskListView = require("views/tasklist");
 var tasks = new Tasks();
 var tasksView = new TaskListView({ collection: tasks });
 var tasksForm = new TaskForm({ collection: tasks });
-var tasksFilter = new Filters();
+var tasksFilter = new Filters({ collection: tasks });
 
 var app = module.exports = {
     collections: {
