@@ -37,6 +37,7 @@ function setup(Backbone) {
 
                 store(file, collection.toJSON()).
                 then(function () {
+                    options.success(model.toJSON(), options);
                     deferred.resolve(model);
                 }, function (err) {
                     deferred.reject(err);
