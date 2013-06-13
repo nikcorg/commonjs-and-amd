@@ -30,10 +30,9 @@ var TaskForm = module.exports = Backbone.View.extend({
         });
     },
     serialize: function () {
-        return this.model && _.extend(this.model.toJSON(), { action: "Edit" }) || { action: "Add" };
+        return !!this.model ? _.extend(this.model.toJSON(), { action: "Edit" }) : { action: "Add" };
     },
     afterRender: function () {
-        this.$titleInput = this.$el.find("input[name=title]");
-        this.$titleInput.focus();
+        this.$titleInput = this.$el.find("input[name=title]").focus();
     }
 });

@@ -15,13 +15,8 @@ var Router = module.exports = Backbone.Router.extend({
 
         this.app = app;
 
-        app.views.filters.on("filter:change", function (filter) {
-            // if (filter in app.filters) {
-            //     app.views.tasks.setFilter(app.filters[filter]);
-            // } else {
-            //     app.views.tasks.clearFilter();
-            // }
-            router.navigate(filter, { trigger: true });
+        app.filters.on("filter:change", function (filter) {
+            router.navigate(filter.get("id"), { trigger: true });
         });
 
         app.views.tasks.on("task:edit", function (task) {
@@ -29,7 +24,6 @@ var Router = module.exports = Backbone.Router.extend({
         });
 
         app.container = new Backbone.Layout({
-            el: document.body,
             template: "layout",
             views: {
                 "#tasks": app.views.tasks,
@@ -38,30 +32,29 @@ var Router = module.exports = Backbone.Router.extend({
             }
         });
 
-        console.log("fetch");
         app.collections.tasks.fetch({ reset: true }).
         then(function () {
-            app.container.render().
+            app.container.setElement(document.body).render().
             done(function () {
-                console.log("render done");
-                console.log("start=", Backbone.history.start());
-            }).fail(function () {
-                console.log("render fail");
+                Backbone.history.start();
             });
         }, function (err) {
-            console.error("fetchin tasks failed");
+            console.error("fetching tasks failed");
         });
     },
     pending: function () {
         var app = this.app;
-        app.views.tasks.setFilter(app.filters.pending);
+        app.filters.activate("pending");
+        app.views.tasks.setFilter(app.filters.active());
     },
     completed: function () {
         var app = this.app;
-        app.views.tasks.setFilter(app.filters.completed);
+        app.filters.activate("completed");
+        app.views.tasks.setFilter(app.filters.active());
     },
     all: function () {
         var app = this.app;
+        app.filters.activate("all");
         app.views.tasks.clearFilter();
     },
     catchall: function () {

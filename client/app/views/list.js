@@ -23,26 +23,49 @@ module.exports = Backbone.Layout.extend({
 
         this.collection.on("add", this.appendItemView, this);
         this.collection.on("remove", this.removeItemView, this);
+        this.collection.on("reset", this.reset, this);
 
-        this.reset();
+        if (this.collection.length > 0) {
+            this.reset();
+        }
     },
     setFilter: function (fn) {
-        if (typeof(fn) === "function") {
+        if (typeof(fn) === "function" && fn !== this.filterBy) {
             this.filterBy = fn;
+            this.reset();
         }
-        this.reset();
     },
     clearFilter: function () {
-        this.filterBy = this.defaultFilter;
-        this.reset();
+        if (this.filterBy !== null) {
+            this.filterBy = this.defaultFilter;
+            this.reset();
+        }
     },
     reset: function () {
         this.removeView();
-        this.collection.filter(this.filterBy || this.defaultFilter).map(this.appendItemView, this);
+        this.appendItemView(this.collection.filter(this.filterBy || this.defaultFilter));
     },
-    appendItemView: function (model) {
-        var View = this.itemView;
-        this.insertView(new View({ model: model })).render();
+    beforeRender: function () {
+        if (this.collection.length > this.getViews().value().length) {
+            this.reset();
+        }
+    },
+    appendItemView: function (models) {
+        var View = this.itemView, views;
+
+        if (!("length" in models)) {
+            models = [models];
+        }
+
+        views = models.map(function (model) {
+            return new View({ model: model });
+        });
+
+        this.insertViews(views);
+
+        views.forEach(function (v) {
+            v.render();
+        });
     },
     removeItemView: function (model) {
         this.removeView(function (view) {
