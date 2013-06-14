@@ -61,7 +61,7 @@ module.exports = function (grunt) {
                     reporter: "dot"
                 },
                 all: {
-                    src: ['tests/**/*.js']
+                    src: ['tests/**/*.spec.js']
                 }
             },
             requirejs: {
