@@ -17,6 +17,8 @@ var Filter = module.exports = Backbone.Model.extend({
 
         if (options.watch) {
             this.watched = options.watch;
+            this.checkAffected();
+
             this.watched.on("reset", this.checkAffected, this);
             this.watched.on("add", this.checkAffected, this);
             this.watched.on("remove", this.checkAffected, this);
@@ -41,7 +43,7 @@ var Filter = module.exports = Backbone.Model.extend({
             return this.fn;
         }
 
-        if (this.watched && propName !== null) {
+        if (propName !== null) {
             switch (propValue) {
             case Filter.ANY_VALUE:
                 return function () {
@@ -50,7 +52,7 @@ var Filter = module.exports = Backbone.Model.extend({
 
             case Filter.NOT_NULL:
                 return function (m) {
-                    return m.get(propName) !== null;
+                    return m.get(propName) != null;
                 };
 
             case Filter.FALSY:
