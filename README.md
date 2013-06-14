@@ -30,4 +30,4 @@ Run the server by commanding <code>npm start</code>, then visit <code>http://loc
 
 ## Demo app
 
-The codebase contains a simple - yet possibly the most convoluted - Todo MVC style app  as an example, with a ridiculously large dependency graph. All for the sake of demonstrating something really, really simple.
+The codebase contains a simple - yet possibly the most convoluted ever - Todo MVC style app  as an example, with a ridiculously large dependency graph. All for the sake of demonstrating something really, really simple.
