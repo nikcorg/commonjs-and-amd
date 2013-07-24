@@ -1,6 +1,16 @@
-git stash -q --keep-index
+# Check for unstaged changes
+git diff-index --quiet HEAD
+DIRTY=$?
+
+# Stash if there are unstaged changes
+test $DIRTY && git stash -q --keep-index
+
+# Run the tests and store the result
 npm run-script test
 RESULT=$?
-git stash pop -q
-[ $RESULT -ne 0 ] && exit 1
-exit 0
+
+# Pop stash if there were unstaged changes
+test $DIRTY && git stash pop -q
+
+# Exit with the return code from the test runner
+exit $RESULT
