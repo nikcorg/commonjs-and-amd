@@ -24,7 +24,7 @@ NB! Requires Grunt 0.4.
 
 Fetch dependencies by commanding <code>npm install</code>. Run tests by commanding <code>npm test</code>.
 
-Build by commanding <code>npm run-script debug</code> (dev version) or <code>grunt run-script build</code> (release version).
+Build by commanding <code>npm run-script debug</code> (dev version) or <code>npm run-script build</code> (release version).
 
 Run the server by commanding <code>npm start</code>, then visit <code>http://localhost:3000</code> (default port) in your browser.
 
