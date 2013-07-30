@@ -43,7 +43,6 @@ module.exports = Backbone.Layout.extend({
     },
     toggleCompleted: function (e) {
         e.preventDefault();
-        this.model.set("completed", !this.model.get("completed"));
-        this.model.save();
+        this.model.set("completed", !this.model.get("completed")).save();
     }
 });
