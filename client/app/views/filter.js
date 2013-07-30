@@ -7,7 +7,7 @@ var FilterView = module.exports = Backbone.View.extend({
         "click input": "activate"
     },
     initialize: function () {
-        this.model.on("all", this.render, this);
+        this.listenTo(this.model, "all", this.render);
     },
     activate: function () {
         this.model.set("active", true);

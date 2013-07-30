@@ -11,7 +11,7 @@ module.exports = Backbone.Layout.extend({
         "keydown .title": "saveOnEnter"
     },
     initialize: function () {
-        this.model.on("change", this.render, this);
+        this.listenTo(this.model, "change", this.render);
     },
     edit: function (e) {
         // this.trigger("task:edit", this.model);
