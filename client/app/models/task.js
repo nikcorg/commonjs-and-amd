@@ -6,5 +6,8 @@ module.exports = Backbone.Model.extend({
     defaults: {
         completed: false,
         title: ""
+    },
+    toggleCompleted: function () {
+        return this.set("completed", ! this.get("completed"));
     }
 });
