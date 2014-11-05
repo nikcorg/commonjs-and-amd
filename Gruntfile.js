@@ -6,7 +6,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-simple-mocha");
-    grunt.loadNpmTasks("grunt-requirejs");
+    grunt.loadNpmTasks("grunt-contrib-requirejs");
 
     /* Define loaders */
     var loaders = {
