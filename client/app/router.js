@@ -12,10 +12,22 @@ var Router = module.exports = Backbone.Router.extend({
     initialize: function (options) {
         var router = this;
         var app = options.app;
+        var currentFilter = null;
 
         this.app = app;
 
+        function resetTasksView(filter, num) {
+            app.views.tasks.reset();
+        }
+
         app.filters.on("filter:change", function (filter) {
+            if (currentFilter) {
+                currentFilter.off("change:affects", resetTasksView);
+            }
+
+            currentFilter = filter;
+            currentFilter.on("change:affects", resetTasksView);
+
             router.navigate(filter.get("id"), { trigger: true });
         });
 
