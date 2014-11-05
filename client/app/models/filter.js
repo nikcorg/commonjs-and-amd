@@ -72,10 +72,9 @@ var Filter = module.exports = Backbone.Model.extend({
             }
         }
     }
+}, {
+    ANY_VALUE: "any_value",
+    FALSY: "falsy",
+    TRUTHY: "truthy",
+    NOT_NULL: "not_null"
 });
-
-// Assign some constants
-Filter.ANY_VALUE = "any_value";
-Filter.FALSY = "falsy";
-Filter.TRUTHY = "truthy";
-Filter.NOT_NULL = "not_null";
