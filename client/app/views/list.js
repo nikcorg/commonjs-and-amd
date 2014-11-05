@@ -21,8 +21,6 @@ module.exports = Backbone.Layout.extend({
             throw new Error("itemView must be configured");
         }
 
-        this.listenTo(this.collection, "add", this.appendItemView);
-        this.listenTo(this.collection, "remove", this.removeItemView);
         this.listenTo(this.collection, "reset", this.reset);
 
         if (this.collection.length > 0) {
